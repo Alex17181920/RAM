@@ -1,4 +1,81 @@
 # RAM
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple DB Operations</title>
+</head>
+
+<body>
+    <h1>Database Operations</h1>
+
+    <!-- Insert Form -->
+    <form method="post">
+        Name: <input type="text" name="name" required>
+        Email: <input type="email" name="email" required>
+        <button type="submit" name="insert">Insert</button>
+    </form>
+
+    <!-- Show Button -->
+    <form method="post">
+        <button type="submit" name="show">Show Data</button>
+    </form>
+
+    <?php
+    // Connect to the database
+    $conn = mysqli_connect("localhost", "root", "", "PHPDB");
+
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    // Handle Insert
+    if (isset($_POST['insert'])) {
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $sql = "INSERT INTO users (name, email) VALUES ('$name', '$email')";
+        mysqli_query($conn, $sql);
+        echo "<p>Data inserted successfully!</p>";
+    }
+
+    // Handle Show
+    if (isset($_POST['show'])) {
+        $result = mysqli_query($conn, "SELECT * FROM users");
+        echo "<table border='1'><tr><th>ID</th><th>Name</th><th>Email</th></tr>";
+        while ($row = mysqli_fetch_assoc($result)) {
+            echo "<tr><td>{$row['id']}</td><td>{$row['name']}</td><td>{$row['email']}</td></tr>";
+        }
+        echo "</table>";
+    }
+
+    mysqli_close($conn);
+    ?>
+</body>
+
+</html>
+
+
+CREATE DATABASE PHPDB;
+
+USE PHPDB;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100)
+);
+
+
+
+
+
+
+
+
+
+
 Php
 Ex01
 Problem Stmt1 : Write a PHP program to Print Your Biodata 
