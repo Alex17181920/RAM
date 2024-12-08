@@ -1,4 +1,126 @@
 # RAM
+
+exp7 q.1
+<?php
+// 1. Connect to MySQL Server
+$servername = "localhost";
+$username = "root"; // Replace with your MySQL username
+$password = ""; // Replace with your MySQL password
+
+// Create connection
+$conn = new mysqli($servername, $username, $password);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+echo "Connected successfully!<br>";
+
+// 2. Create Database
+$dbname = "test_db";
+$sql = "CREATE DATABASE $dbname";
+if ($conn->query($sql) === TRUE) {
+    echo "Database '$dbname' created successfully!<br>";
+} else {
+    echo "Error creating database: " . $conn->error . "<br>";
+}
+
+// Use the database
+$conn->select_db($dbname);
+
+// 3. Create Table
+$tableName = "users";
+$sql = "CREATE TABLE $tableName (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    age INT(3)
+)";
+if ($conn->query($sql) === TRUE) {
+    echo "Table '$tableName' created successfully!<br>";
+} else {
+    echo "Error creating table: " . $conn->error . "<br>";
+}
+
+// 4. Insert Values into the Table
+$sql = "INSERT INTO $tableName (name, email, age) VALUES 
+    ('Audumbar', 'audumbar@example.com', 25),
+    ('John Doe', 'john@example.com', 30)";
+if ($conn->query($sql) === TRUE) {
+    echo "Records inserted successfully!<br>";
+} else {
+    echo "Error inserting records: " . $conn->error . "<br>";
+}
+
+// 5. Select Data from the Table
+$sql = "SELECT * FROM $tableName";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    echo "All Records:<br>";
+    while ($row = $result->fetch_assoc()) {
+        echo "ID: " . $row['id'] . " | Name: " . $row['name'] . " | Email: " . $row['email'] . " | Age: " . $row['age'] . "<br>";
+    }
+} else {
+    echo "No records found!<br>";
+}
+
+// 6. Select Data with WHERE Clause
+$sql = "SELECT * FROM $tableName WHERE age > 25";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    echo "Records with age > 25:<br>";
+    while ($row = $result->fetch_assoc()) {
+        echo "ID: " . $row['id'] . " | Name: " . $row['name'] . " | Email: " . $row['email'] . " | Age: " . $row['age'] . "<br>";
+    }
+} else {
+    echo "No records found!<br>";
+}
+
+// 7. Update Values in the Table
+$sql = "UPDATE $tableName SET age = 28 WHERE name = 'Audumbar'";
+if ($conn->query($sql) === TRUE) {
+    echo "Record updated successfully!<br>";
+} else {
+    echo "Error updating record: " . $conn->error . "<br>";
+}
+
+// 8. Delete a Particular Record
+$sql = "DELETE FROM $tableName WHERE name = 'John Doe'";
+if ($conn->query($sql) === TRUE) {
+    echo "Record deleted successfully!<br>";
+} else {
+    echo "Error deleting record: " . $conn->error . "<br>";
+}
+
+// 9. Drop the Table
+$sql = "DROP TABLE $tableName";
+if ($conn->query($sql) === TRUE) {
+    echo "Table '$tableName' dropped successfully!<br>";
+} else {
+    echo "Error dropping table: " . $conn->error . "<br>";
+}
+
+// 10. Drop the Database
+$sql = "DROP DATABASE $dbname";
+if ($conn->query($sql) === TRUE) {
+    echo "Database '$dbname' dropped successfully!<br>";
+} else {
+    echo "Error dropping database: " . $conn->error . "<br>";
+}
+
+// Close the connection
+$conn->close();
+?>
+
+
+
+
+
+
+
+exp 7 q.2
+
+
 <!DOCTYPE html>
 <html lang="en">
 
